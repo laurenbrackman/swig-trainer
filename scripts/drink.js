@@ -61,7 +61,7 @@ export class Drink {
             if (this.size < 16) {
                 newSize = 16;
             }
-            else if (size > 32) {
+            else if (this.size > 32) {
                 newSize = 32;
             }
         }
