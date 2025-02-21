@@ -29,11 +29,11 @@ new Drink("Endless Summer", "Mountain Dew", "", ['Pomegranate', 'Grapefruit'], [
 new Drink("Guava Have It", "Mountain Dew", "", ['Guava', 'Strawberry'], ['Coconut Cream'], [], [], [], false),
 new Drink("Jolly Elf", "Mountain Dew", "", ['Passion Fruit'], [], ['Strawberry'], ['Fresh Orange'], [], false),
 new Drink("The Rocket", "Mountain Dew", "", ['Raspberry', 'Coconut', 'Blackberry'], ['Vanilla Cream'], [], [], [], false),
-new Drink("Watermelon Sugar", "Watermelon", "", ['Mango'], ['Coconut Cream'], [], [], ['Passion Fruit Pearls'], false),
+new Drink("Watermelon Sugar", "Mountain Dew", "", ['Watermelon','Mango'], ['Coconut Cream'], [], [], ['Passion Fruit Pearls'], false),
 new Drink("Candy Girl", "Mountain Dew", "", ['Coconut'], [], [], ['Fresh Lime'], ['Frozen Strawberries'], false),
 new Drink("Hula Girl", "Sprite", "Lemonade", ['Mango', 'Pineapple', 'Strawberry'], ['Coconut Cream'], [], [], [], false),
-new Drink("Loop-T-Loop", "Watermelon", "", ['Peach', 'Strawberry'], [], [], [], [], false),
-new Drink("Poppin' Pineapple", "Watermelon", "", ['Pineapple'], [], [], [], ['Strawberry Pearls'], false),
+new Drink("Loop-T-Loop", "Sprite", "", ['Watermelon','Peach', 'Strawberry'], [], [], [], [], false),
+new Drink("Poppin' Pineapple", "Sprite", "", ['Watermelon','Pineapple'], [], [], [], ['Strawberry Pearls'], false),
 new Drink("Riptide", "Sprite", "", ['Cranberry'], [], ['Raspberry'], ['Fresh Lime'], [], false),
 new Drink("Shark Attack", "Sprite", "Lemonade", ['Blue Raspberry'], [], [], [], ['Gummy Shark'], false),
 new Drink("Unlucky Ducky", "Sprite", "Lemonade", ['Strawberry'], [], [], [], ['Gummy Shark'], false),
@@ -76,10 +76,10 @@ new Drink("Coco Cocoa", "Cocoa", "", ['Vanilla'], ['Coconut Cream'], [], [], [],
 new Drink("Buttery Beer", "Root Beer", "", ['Butterscotch'], ['Vanilla Cream'], [], [], [], false),
 new Drink("Happy Camper", "Root Beer", "", ['Toasted Marshmallow'], ['Half and Half'], [], [], [], false),
 new Drink("Island Time", "Fresca", "", ['Passion Fruit'], ['Coconut Cream'], ['Mango'], ['Fresh Orange'], [], false),
-new Drink("Pink Bahama", "", "", ['Peach', 'Strawberry', 'Raspberry'], [], [], ['Fresh Lemon'], [], false),
+new Drink("Pink Bahama", "Fresca", "", ['Peach', 'Strawberry', 'Raspberry'], [], [], ['Fresh Lemon'], [], false),
 new Drink("Sleigh All Day", "Fresca", "Lemonade", ['Pomergranate', 'Peach'], [], ['Strawberry'], ['Fresh Lemon'], [], false),
 new Drink("Daydreamer", "Ginger Ale", "", ['Pomegranate', 'Cranberry'], [], [], ['Fresh Lemon'], [], false),
-new Drink("Orange You Glad", "", "", ['Orange Soda', 'Vanilla'], ['Half and Half'], [], [], [], false),
+new Drink("Orange You Glad", "Orange Soda", "", ['Orange Soda', 'Vanilla'], ['Half and Half'], [], [], [], false),
 new Drink("Dizzle", "Sprite", "", ['Pineapple'], ['Coconut Cream'], ['Peach'], [], [], false),
 new Drink("The Demi", "Sparkling Water", "", ['SF Raspberry', 'SF Pineapple', 'SF Coconut', 'SF Vanilla'], ['Coconut Cream'], [], [], [], false),
 new Drink("Missionary", "Sprite", "", ["Tiger's Blood"], ['Coconut Cream'], [], [], [], false),
@@ -150,6 +150,10 @@ function checkAnswer() {
     let allCorrect = selected.length === correct.length && selected.every(item => recipeList.has(item));
     let incorrectItems = selected.filter(item => !recipeList.has(item));
     let missingItems = correct.filter(item => !selected.includes(item));
+
+    console.log("LET'S CHECK");
+    console.log(`Actual: ${correct}`);
+    console.log(`Selected: ${selected}`);
 
     if (allCorrect && missingItems.length === 0) {
         resultDiv.innerText = "✅ Correct!";

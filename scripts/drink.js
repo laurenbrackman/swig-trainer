@@ -120,8 +120,6 @@ export class Drink {
             recipeHTML += `<li><strong>Fruits:</strong> ${this.fruits}</li>`;
         }
 
-        console.log("EXTRAS EXTRAS")
-        console.log(`${this.category} ${this.extras}`)
         if(this.extras.length > 0) {
             if(this.category==="Blended Reviver"){
                 this.extras = this.extras.replace("Concentrate", `Concentrate (${purees} pumps)`);
