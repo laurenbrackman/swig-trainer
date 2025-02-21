@@ -134,7 +134,7 @@ button:focus {
     margin:25px 0px;
 }
 
-.confirm-btn, .confirm-btn:hover{
+.confirm-btn, .confirm-btn:hover, .back-btn, .back-btn:hover{
     background-color:green;
 }
 

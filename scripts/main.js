@@ -94,6 +94,8 @@ const resultDiv = document.getElementById("result");
 // Function to generate a new drink
 function generateDrink() {
     clearSelections();
+    showSection(document.getElementById("cup"));
+    hideSection(document.getElementById("recipe"));
     let drink = drinks[getRandomInt(drinks.length)];
     let size = sizes[getRandomInt(sizes.length)];
     drink.setCupSize(size);
@@ -116,6 +118,15 @@ document.querySelectorAll(".category button").forEach(button => {
                 showSection(document.getElementById("check-answer-btn"))
             }
         }
+        else if(value=="←"){
+            let thisSection = button.closest(".category");
+            let prevSection = thisSection.previousElementSibling;
+            hideSection(thisSection);
+            if(prevSection){
+                showSection(prevSection);
+            }
+        }
+
         else{
             if (mySelections.has(value)) {
                 mySelections.delete(value);
