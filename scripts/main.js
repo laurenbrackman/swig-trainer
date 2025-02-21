@@ -112,6 +112,9 @@ document.querySelectorAll(".category button").forEach(button => {
             if(nextSection){
                 showSection(nextSection);
             }
+            else{
+                showSection(document.getElementById("check-answer-btn"))
+            }
         }
         else{
             if (mySelections.has(value)) {
