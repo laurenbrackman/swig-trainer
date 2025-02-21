@@ -50,8 +50,7 @@ export class Drink {
         }
     }
 
-    verifySize() {
-        let newSize = this.size;
+    verifySize(newSize) {
         if (this.category == "Hot Cocoa") {
             newSize = 12;
         }

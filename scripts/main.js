@@ -90,6 +90,7 @@ let recipeList = new Set();
 let mySelections = new Set();
 const selectionDiv = document.getElementById("selections");
 const resultDiv = document.getElementById("result");
+const cupDiv = document.getElementById("cup");
 
 // Function to generate a new drink
 function generateDrink() {
@@ -100,9 +101,6 @@ function generateDrink() {
     recipeList = new Set(drink.getRecipe());
     drink.displayRecipe();
 }
-
-// Event listener for Generate button
-document.getElementById("generate-btn").addEventListener("click", generateDrink);
 
 // Event listener for ingredient selection
 document.querySelectorAll(".category button").forEach(button => {
@@ -143,6 +141,7 @@ function clearSelections(){
     });
 
     mySelections.clear();
+    showSection(cupDiv);
     selectionDiv.innerText = "";
     resultDiv.innerText = ""; // Clear result feedback
 
@@ -152,16 +151,25 @@ function showRecipe(){
     const recipeDiv = document.getElementById("recipe");
     const button = document.getElementById("show-recipe");
     if (recipeDiv.style.display === "none") {
-        recipeDiv.style.display = "";
+        showSection(recipeDiv)
         button.innerText = "Hide Recipe"
     } 
     else {
-        recipeDiv.style.display = "none";
+        hideSection(recipeDiv)
         button.innerText = "Show Recipe"
     }
 }
 
+function hideSection(section){
+    section.style.display = "none";
+}
+
+function showSection(section){
+    section.style.display = "";
+}
+
 // Event listener for buttons
+document.getElementById("generate-btn").addEventListener("click", generateDrink);
 document.getElementById("check-answer-btn").addEventListener("click", checkAnswer);
 document.getElementById("clear").addEventListener("click", clearSelections);
 document.getElementById("show-recipe").addEventListener("click", showRecipe);
