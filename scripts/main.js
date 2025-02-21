@@ -90,7 +90,6 @@ let recipeList = new Set();
 let mySelections = new Set();
 const selectionDiv = document.getElementById("selections");
 const resultDiv = document.getElementById("result");
-const cupDiv = document.getElementById("cup");
 
 // Function to generate a new drink
 function generateDrink() {
@@ -114,6 +113,8 @@ document.querySelectorAll(".category button").forEach(button => {
             mySelections.add(value);
             this.style.opacity = "0.5";
         }
+
+        hideSection(button.closest(".category"));
 
         selectionDiv.innerText = "Your Answer: " + [...mySelections].join(", ");
     });
@@ -141,9 +142,11 @@ function clearSelections(){
     });
 
     mySelections.clear();
-    showSection(cupDiv);
+    document.querySelectorAll(".category").forEach(category => {
+        showSection(category);
+    });
     selectionDiv.innerText = "";
-    resultDiv.innerText = ""; // Clear result feedback
+    resultDiv.innerText = "";
 
 }
 
