@@ -105,17 +105,19 @@ function generateDrink() {
 document.querySelectorAll(".category button").forEach(button => {
     button.addEventListener("click", function () {
         let value = this.textContent.trim(); 
-
-        if (mySelections.has(value)) {
-            mySelections.delete(value);
-            this.style.opacity = "1";
-        } else {
-            mySelections.add(value);
-            this.style.opacity = "0.5";
+        if(value=="✔"){
+            hideSection(button.closest(".category"));
         }
-
-        hideSection(button.closest(".category"));
-
+        else{
+            if (mySelections.has(value)) {
+                mySelections.delete(value);
+                this.style.opacity = "1";
+            } else {
+                mySelections.add(value);
+                this.style.opacity = "0.5";
+            }
+        }
+        
         selectionDiv.innerText = "Your Answer: " + [...mySelections].join(", ");
     });
 });
