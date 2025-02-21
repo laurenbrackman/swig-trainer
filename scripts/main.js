@@ -105,6 +105,24 @@ function generateDrink() {
     drink.displayRecipe();
 }
 
+function addQuantity(button){
+    let pumpsInput = document.createElement('input');
+    pumpsInput.className = 'quantity';
+    pumpsInput.type = 'number';
+    pumpsInput.min = 1;
+    pumpsInput.placeholder = 'Enter pumps';
+    pumpsInput.style.marginLeft = '10px';
+    pumpsInput.style.padding = '5px';
+    button.append(pumpsInput);
+}
+
+function removeQuantity(button){
+    let pumpsInput = button.querySelector('.quantity');
+    if (pumpsInput) {
+        pumpsInput.remove();
+    }
+}
+
 // Event listener for ingredient selection
 document.querySelectorAll(".category button").forEach(button => {
     button.addEventListener("click", function () {
@@ -133,9 +151,15 @@ document.querySelectorAll(".category button").forEach(button => {
             if (mySelections.has(value)) {
                 mySelections.delete(value);
                 this.style.opacity = "1";
+                if(button.className == "quant-btn"){
+                    removeQuantity(button)
+                }
             } else {
                 mySelections.add(value);
                 this.style.opacity = "0.5";
+                if(button.className == "quant-btn"){
+                    addQuantity(button)
+                }
             }
         }
         
