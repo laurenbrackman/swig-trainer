@@ -147,17 +147,37 @@ document.querySelectorAll(".category button").forEach(button => {
 function checkAnswer() {
     let correct = [...recipeList];
     let selected = [...mySelections];
-    
     let allCorrect = selected.length === correct.length && selected.every(item => recipeList.has(item));
+    let incorrectItems = selected.filter(item => !recipeList.has(item));
+    let missingItems = correct.filter(item => !selected.includes(item));
 
-    if (allCorrect) {
+    if (allCorrect && missingItems.length === 0) {
         resultDiv.innerText = "✅ Correct!";
         resultDiv.style.color = "green";
     } else {
         resultDiv.innerText = "❌ Incorrect!";
         resultDiv.style.color = "red";
+        if (incorrectItems.length > 0) {
+            let incorrectList = document.createElement("ul");
+            incorrectItems.forEach(item => {
+                let listItem = document.createElement("li");
+                listItem.innerText = `Incorrect: ${item}`;
+                incorrectList.appendChild(listItem);
+            });
+            resultDiv.appendChild(incorrectList);
+        }
+        if (missingItems.length > 0) {
+            let missingList = document.createElement("ul");
+            missingItems.forEach(item => {
+                let listItem = document.createElement("li");
+                listItem.innerText = `Missing: ${item}`;
+                missingList.appendChild(listItem);
+            });
+            resultDiv.appendChild(missingList);
+        }
     }
 }
+
 
 function clearSelections() {
     document.querySelectorAll(".category button").forEach(button => {
