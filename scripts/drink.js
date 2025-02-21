@@ -17,7 +17,12 @@ export class Drink {
     }
 
     getRecipe() {
-        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended]
+        if(this.blended && (this.base=="Reviver" || this.base=="SF Reviver")){
+            this.extras = this.base + " Concentrate";
+            this.base = this.topoff;
+            this.topoff = "";
+        }
+        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended ? "Blender" : ""]
             .flat()
             .filter(item => item); 
     }
@@ -115,12 +120,13 @@ export class Drink {
             recipeHTML += `<li><strong>Fruits:</strong> ${this.fruits}</li>`;
         }
 
-        if(this.category==="Blended Reviver"){
-            recipeHTML += `<li><strong>Reviver Concentrate:</strong> ${purees} pumps</li>`;
-        }
-
+        console.log("EXTRAS EXTRAS")
+        console.log(`${this.category} ${this.extras}`)
         if(this.extras.length > 0) {
-            recipeHTML += `<li><strong>Extras:</strong> ${this.extras}</li>`;
+            if(this.category==="Blended Reviver"){
+                this.extras = this.extras.replace("Concentrate", `Concentrate (${purees} pumps)`);
+            }   
+            recipeHTML += `<li><strong>Extras:</strong> ${this.extras}</li>`; 
         }
     
         recipeHTML += "</ul>";
