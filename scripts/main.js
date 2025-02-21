@@ -95,7 +95,9 @@ const resultDiv = document.getElementById("result");
 function generateDrink() {
     clearSelections();
     showSection(document.getElementById("cup"));
-    hideSection(document.getElementById("recipe"));
+    if(document.getElementById("recipe").style.display == ""){
+        toggleRecipeVisibility(document.getElementById("recipe"));
+    }
     let drink = drinks[getRandomInt(drinks.length)];
     let size = sizes[getRandomInt(sizes.length)];
     drink.setCupSize(size);
@@ -170,7 +172,7 @@ function clearSelections(){
 
 }
 
-function showRecipe(){
+function toggleRecipeVisibility(){
     const recipeDiv = document.getElementById("recipe");
     const button = document.getElementById("show-recipe");
     if (recipeDiv.style.display === "none") {
@@ -195,4 +197,4 @@ function showSection(section){
 document.getElementById("generate-btn").addEventListener("click", generateDrink);
 document.getElementById("check-answer-btn").addEventListener("click", checkAnswer);
 document.getElementById("clear").addEventListener("click", clearSelections);
-document.getElementById("show-recipe").addEventListener("click", showRecipe);
+document.getElementById("show-recipe").addEventListener("click", toggleRecipeVisibility);
