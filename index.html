@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dirty Soda Trainer</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header class="sticky-header">
+            <h1>Dirty Soda Trainer</h1>
+            <button id="generate-btn">Generate Drink</button>
+            <div class="recipe-card">
+                <div id="drink"></div>
+                <div id="recipe" style="display:none"></div>
+                <div id="selections"></div>
+                <button id="check-answer-btn">Check Answer</button>
+                <div id="result"></div>
+            </div>
+        </header>
+        <div id="buttons-container">
+            <div class="category">
+                <button>Foam</button>
+                <button>Plastic</button>
+                <button>Kids</button>
+                <button>Paper</button>
+            </div>
+            <div class="category">
+                <button   style="background-color:#00B140">Sprite</button>
+                <button   style="background-color:#9E1B32">Dr. Pepper</button>
+                <button   style="background-color:#4C9F38">Mountain Dew</button>
+                <button   style="background-color:#111111">Coke</button>
+                <button   style="background-color:gray">Diet Coke</button>
+                <button   style="background-color:#111111">Coke Zero</button>
+                <button   style="background-color:#00C49F">Sprite</button>
+                <button   style="background-color:#6F4F3B">Root Beer</button>
+                <button   style="background-color:#A6C8E4">Water</button>
+                <button   style="background-color:#C8D6E5">Sparkling Water</button>
+                <button   style="background-color:#F4A261">Reviver</button>
+                <button   style="background-color:#F4A261">SF Reviver</button>
+                <button   style="background-color:#8C5E3C">Cocoa</button>
+                <button   style="background-color:#9E1B32">Diet Dr. Pepper</button>
+                <button   style="background-color:#4AC8B9">Fresca</button>
+                <button   style="background-color:#F1A046">Lemonade</button>
+                <button   style="background-color:#FB6F20">Orange Soda</button>
+                <button   style="background-color:#A8704B">Ginger Ale</button>                
+            </div>
+            <div class="category">
+                <button style="background-color: #d1cdbf">Vanilla</button>
+                <button style="background-color: #FF6F61">Strawberry</button>
+                <button style="background-color: #E74C3C">Raspberry</button>
+                <button style="background-color: #3498DB">Blue Raspberry</button>
+                <button style="background-color: #FFB84D">Peach</button>
+                <button style="background-color: #FFB74D">Mango</button>
+                <button style="background-color: #9B59B6">Grape</button>
+                <button style="background-color: #F39C12">Pineapple</button>
+                <button style="background-color: #dcdac7">Coconut</button>
+                <button style="background-color: #FF5C8D">Watermelon</button>
+                <button style="background-color: #8E44AD">Blackberry</button>
+                <button style="background-color: #d1cec2">SF Vanilla</button>
+                <button style="background-color: #FF6F61">SF Strawberry</button>
+                <button style="background-color: #E74C3C">SF Raspberry</button>
+                <button style="background-color: #d6d4c6">SF Coconut</button>
+                <button style="background-color: #FFB84D">SF Peach</button>
+                <button style="background-color: #FFB74D">SF Mango</button>
+                <button style="background-color: #FF5733">Grapefruit</button>
+                <button style="background-color: #F39C12">SF Pineapple</button>
+                <button style="background-color: #FF5C8D">SF Watermelon</button>
+                <button style="background-color: #E74C3C">Cranberry</button>
+                <button style="background-color: #9B59B6">Pomegranate</button>
+                <button style="background-color: #F39C12">Guava</button>
+                <button style="background-color: #FF8C00">Passionfruit</button>
+                <button style="background-color: #D35400">English Toffee</button>
+                <button style="background-color: #d899c9">Cupcake</button>
+                <button style="background-color: #D7BDE2">Toasted Marshmallow</button>
+                <button style="background-color: #F39C12">Butterscotch</button>
+                <button style="background-color: #2E8B57">Peppermint</button>
+                <button style="background-color: #E74C3C">Tiger's Blood</button>
+            </div>
+            
+            <div class="category">
+                <button style="background-color: #E74C3C">Raspberry Puree</button>
+                <button style="background-color: #FF6F61">Strawberry Puree</button>
+                <button style="background-color: #FFB74D">Mango Puree</button>
+                <button style="background-color: #FFB84D">Peach Puree</button>
+            </div>
+            
+            <div class="category">
+                <button style="background-color: #ffd84d">Fresh Lemon</button>
+                <button style="background-color: #8DC63F">Fresh Lime</button>
+                <button style="background-color: #FFA500">Fresh Orange</button>
+            </div>
+            
+            <div class="category">
+                <button style="background-color: #F1C40F">Coconut Cream</button>
+                <button style="background-color: #F39C12">Vanilla Cream</button>
+                <button style="background-color: #F5B041">Half & Half</button>
+            </div>
+            
+            <div class="category">
+                <button style="background-color: #1ABC9C">Reviver Concentrate</button>
+                <button style="background-color: #16A085">SF Reviver Concentrate</button>
+                <button style="background-color: #FF8C00">Mango Pearls</button>
+                <button style="background-color: #FF6F61">Strawberry Pearls</button>
+                <button style="background-color: #FF6347">Gummy Shark</button>
+                <button style="background-color: #cfc5c5">Whipped Cream</button>
+            </div>
+        </div>
+        <script type="module" src="scripts/main.js"></script>
+    </body>
+</html>
