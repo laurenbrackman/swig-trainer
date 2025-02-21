@@ -13,10 +13,11 @@ export class Drink {
         this.extras = extras;
         this.blended = blended;
         this.category = this.determineCategory();
+        this.size = 16;
     }
 
-    getRecipe(size) {
-        return [this.getCupType(size),this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended]
+    getRecipe() {
+        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended]
             .flat()
             .filter(item => item); 
     }
@@ -34,14 +35,14 @@ export class Drink {
         return this.blended ? "Blended Soda" : "Soda";
     }
 
-    getCupType(size) {
-        if (size == 12) {
+    getCupType() {
+        if (this.size == 12) {
             return this.category == "Hot Cocoa" ? "Paper" : "Kids";
         } 
-        else if (size == 16) {
+        else if (this.size == 16) {
             return "Plastic"
         } 
-        else if (size == 44) {
+        else if (this.size == 44) {
             return "Foam";
         }
         else {
@@ -49,8 +50,8 @@ export class Drink {
         }
     }
 
-    verifySize(size) {
-        let newSize = size;
+    verifySize() {
+        let newSize = this.size;
         if (this.category == "Hot Cocoa") {
             newSize = 12;
         }
@@ -58,25 +59,29 @@ export class Drink {
             newSize = 24;
         }
         else if (this.category == "Reviver" || this.category == "Blended Reviver"){
-            if (size < 16) {
+            if (this.size < 16) {
                 newSize = 16;
             }
             else if (size > 32) {
                 newSize = 32;
             }
         }
-        return newSize
+        return newSize;
     }
 
-    displayRecipe(size) {
+    setCupSize(newsize) {
+        this.size = this.verifySize(newsize);
+    }
+
+    displayRecipe() {
         const drinkDiv = document.getElementById("drink");
         const recipeDiv = document.getElementById("recipe");
     
-        drinkDiv.textContent = `${size}oz ${this.name}`;
-        const [flavors, creams, purees, topoff] = calculateRatios(this.category, size);
+        drinkDiv.textContent = `${this.size}oz ${this.name}`;
+        const [flavors, creams, purees, topoff] = calculateRatios(this.category, this.size);
     
         let recipeHTML = "<ul>";
-        recipeHTML += `<li><strong>Cup:</strong> ${this.getCupType(size)}</li>`;
+        recipeHTML += `<li><strong>Cup:</strong> ${this.getCupType(this.size)}</li>`;
         recipeHTML += `<li><strong>Base:</strong> ${this.base}</li>`;
         
         if (topoff > 0) {

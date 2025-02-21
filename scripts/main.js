@@ -96,9 +96,9 @@ function generateDrink() {
     clearSelections();
     let drink = drinks[getRandomInt(drinks.length)];
     let size = sizes[getRandomInt(sizes.length)];
-    size = drink.verifySize(size);
-    recipeList = new Set(drink.getRecipe(size));
-    drink.displayRecipe(size);
+    drink.setCupSize(size);
+    recipeList = new Set(drink.getRecipe());
+    drink.displayRecipe();
 }
 
 // Event listener for Generate button
