@@ -93,19 +93,11 @@ const resultDiv = document.getElementById("result");
 
 // Function to generate a new drink
 function generateDrink() {
-    // Reset buttons and selections
-    document.querySelectorAll(".category button").forEach(button => {
-        button.style.opacity = "1";
-        button.style.backgroundColor = ""; // Reset button colors
-    });
-
-    mySelections.clear();
-    selectionDiv.innerText = "";
-    resultDiv.innerText = ""; // Clear result feedback
-
+    clearSelections();
     let drink = drinks[getRandomInt(drinks.length)];
     let size = sizes[getRandomInt(sizes.length)];
-    recipeList = new Set(drink.getRecipe());
+    size = drink.verifySize(size);
+    recipeList = new Set(drink.getRecipe(size));
     drink.displayRecipe(size);
 }
 
@@ -125,7 +117,7 @@ document.querySelectorAll(".category button").forEach(button => {
             this.style.opacity = "0.5";
         }
 
-        selectionDiv.innerText = [...mySelections].join(", ");
+        selectionDiv.innerText = "Your Answer: " + [...mySelections].join(", ");
     });
 });
 
@@ -142,20 +134,20 @@ function checkAnswer() {
     } else {
         resultDiv.innerText = "❌ Incorrect!";
         resultDiv.style.color = "red";
-        
-        // Highlight incorrect selections
-        document.querySelectorAll(".category button").forEach(button => {
-            let value = button.textContent.trim();
-            if (mySelections.has(value)) {
-                if (recipeList.has(value)) {
-                    button.style.backgroundColor = "lightgreen"; // Correct selection
-                } else {
-                    button.style.backgroundColor = "lightcoral"; // Incorrect selection
-                }
-            }
-        });
     }
 }
 
-// Event listener for Check Answer button
+function clearSelections(){
+    document.querySelectorAll(".category button").forEach(button => {
+        button.style.opacity = "1";
+    });
+
+    mySelections.clear();
+    selectionDiv.innerText = "";
+    resultDiv.innerText = ""; // Clear result feedback
+
+}
+
+// Event listener for buttons
 document.getElementById("check-answer-btn").addEventListener("click", checkAnswer);
+document.getElementById("clear").addEventListener("click", clearSelections);

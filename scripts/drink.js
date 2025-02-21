@@ -15,8 +15,8 @@ export class Drink {
         this.category = this.determineCategory();
     }
 
-    getRecipe() {
-        return [this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended]
+    getRecipe(size) {
+        return [this.getCupType(size),this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended]
             .flat()
             .filter(item => item); 
     }
@@ -34,6 +34,40 @@ export class Drink {
         return this.blended ? "Blended Soda" : "Soda";
     }
 
+    getCupType(size) {
+        if (size == 12) {
+            return this.category == "Hot Cocoa" ? "Paper" : "Kids";
+        } 
+        else if (size == 16) {
+            return "Plastic"
+        } 
+        else if (size == 44) {
+            return "Foam";
+        }
+        else {
+            return (this.category == "Soda")? "Foam" : "Plastic";
+        }
+    }
+
+    verifySize(size) {
+        let newSize = size;
+        if (this.category == "Hot Cocoa") {
+            newSize = 12;
+        }
+        else if (this.category == "Frozen Hot Cocoa") {
+            newSize = 24;
+        }
+        else if (this.category == "Reviver" || this.category == "Blended Reviver"){
+            if (size < 16) {
+                newSize = 16;
+            }
+            else if (size > 32) {
+                newSize = 32;
+            }
+        }
+        return newSize
+    }
+
     displayRecipe(size) {
         const drinkDiv = document.getElementById("drink");
         const recipeDiv = document.getElementById("recipe");
@@ -42,6 +76,7 @@ export class Drink {
         const [flavors, creams, purees, topoff] = calculateRatios(this.category, size);
     
         let recipeHTML = "<ul>";
+        recipeHTML += `<li><strong>Cup:</strong> ${this.getCupType(size)}</li>`;
         recipeHTML += `<li><strong>Base:</strong> ${this.base}</li>`;
         
         if (topoff > 0) {
