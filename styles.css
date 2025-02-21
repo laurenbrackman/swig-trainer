@@ -92,7 +92,7 @@ ul {
     flex-wrap: wrap;  /* Allow buttons to wrap to the next line */
 }
 
-.category {
+.category-buttons {
     display: flex;
     gap: 12px;
     background-color: var(--category-bg);
