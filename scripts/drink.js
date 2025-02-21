@@ -55,26 +55,32 @@ export class Drink {
         }
     }
 
-    verifySize(newSize) {
+    verifySize() {
+        let newSize = this.size;
         if (this.category == "Hot Cocoa") {
             newSize = 12;
+            console.log(`${this.category} converted ${this.size} to ${newSize}`)
         }
         else if (this.category == "Frozen Hot Cocoa") {
             newSize = 24;
+            console.log(`${this.category} converted ${this.size} to ${newSize}`)
         }
         else if (this.category == "Reviver" || this.category == "Blended Reviver"){
             if (this.size < 16) {
                 newSize = 16;
+                console.log(`${this.category} converted ${this.size} to ${newSize}`)
             }
             else if (this.size > 32) {
                 newSize = 32;
+                console.log(`${this.category} converted ${this.size} to ${newSize}`)
             }
         }
         return newSize;
     }
 
     setCupSize(newsize) {
-        this.size = this.verifySize(newsize);
+        this.size = newsize;
+        this.size = this.verifySize();
     }
 
     displayRecipe() {
