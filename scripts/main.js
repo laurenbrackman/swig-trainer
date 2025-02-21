@@ -109,7 +109,7 @@ function generateDrink() {
 document.querySelectorAll(".category button").forEach(button => {
     button.addEventListener("click", function () {
         let value = this.textContent.trim(); 
-        if(value=="✔"){
+        if(value=="→"){
             let thisSection = button.closest(".category");
             let nextSection = thisSection.nextElementSibling;
             hideSection(thisSection);
