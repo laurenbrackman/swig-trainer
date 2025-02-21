@@ -27,45 +27,35 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
-    justify-content: space-between;
-    height: 100vh;
-    padding: 20px;
-    flex-direction: column;
-    max-width: 900px;
-    margin: auto;
 }
 
-.sticky-header {
+.header-card, .card {
     background-color: var(--bg-color);
     padding: var(--header-padding);
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    width: 50%;
+    margin: 20px;
 }
 
-.sticky-header h1 {
+.action-buttons{
+    display:flex;
+}
+
+.action-buttons button{
+    margin-right: 24px;
+}
+
+div {
+    margin-bottom: 16px;
+}
+.header-card h1 {
     font-size: 36px;
     font-weight: 600;
     margin-right: 20px;
     color: var(--primary-color);
     letter-spacing: 2px;
     margin-bottom: 16px;
-}
-
-/* Recipe Card */
-.recipe-card {
-    background: var(--card-bg);
-    padding: var(--padding);
-    border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
-    margin-top: 30px;
-    width: 100%;
-    max-width: 900px;
 }
 
 #drink {

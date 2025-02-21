@@ -7,17 +7,18 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <header class="sticky-header">
+        <header class="header-card">
             <h1>Dirty Soda Trainer</h1>
-            <button id="generate-btn">Generate Drink</button>
-            <div class="recipe-card">
-                <div id="drink"></div>
-                <div id="recipe" style="display:none"></div>
-                <div id="selections"></div>
+            <div id="drink"></div>
+            <div id="recipe" style="display:none"></div>
+            <div class="action-buttons">
+                <button id="generate-btn">Generate New Drink</button>
                 <button id="show-recipe">Show Recipe</button>
-                <button id="clear">Clear Selections</button>
+                <button id="clear">Restart</button>
             </div>
         </header>
+        <div class="card">
+        <div id="selections"></div>
         <div id="buttons-container">
             <div class="category" id="cup" style="display:none">
                 <h2>Cup Type</h2>
@@ -136,12 +137,15 @@
                 <button style="background-color: #FF6F61">Strawberry Pearls</button>
                 <button style="background-color: #FF6347">Gummy Shark</button>
                 <button style="background-color: #cfc5c5">Whipped Cream</button>
+                <button style="background-color: #FF8C00">Frozen Mangos</button>
+                <button style="background-color: #FF6F61">Frozen Strawberries</button>
                 <button class="confirm-btn">✔</button>
                 </div>
             </div>
             
             <button id="check-answer-btn" style="display:none">Check Answer</button>
             <div id="result"></div>
+        </div>
         </div>
         <script type="module" src="scripts/main.js"></script>
     </body>
