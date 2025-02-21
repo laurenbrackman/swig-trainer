@@ -2,7 +2,7 @@ import { Drink } from "./drink.js";
 import {getRandomInt} from "./utils.js";
 
 const drinks = [
-    new Drink("Raspberry Dream", "Dr. Pepper", "", [], ['Coconut Cream'], ['Raspberry'], [], [], false),
+new Drink("Raspberry Dream", "Dr. Pepper", "", [], ['Coconut Cream'], ['Raspberry'], [], [], false),
 new Drink("Texas Tab", "Dr. Pepper", "", ['Vanilla'], ['Coconut Cream'], [], [], [], false),
 new Drink("DDD", "Diet Dr. Pepper", "", ['Coconut'], [], [], [], [], false),
 new Drink("Spring Fling", "Dr. Pepper", "", ['Vanilla'], ['Coconut Cream'], ['Strawberry'], [], [], false),

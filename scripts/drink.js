@@ -22,7 +22,7 @@ export class Drink {
             this.base = this.topoff;
             this.topoff = "";
         }
-        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.fruits, this.extras, this.blended ? "Blender" : ""]
+        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.purees, this.fruits, this.extras, this.blended ? "Blender" : ""]
             .flat()
             .filter(item => item); 
     }
