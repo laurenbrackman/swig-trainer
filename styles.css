@@ -40,10 +40,36 @@ body {
 
 .action-buttons{
     display:flex;
+    gap: 24px;
 }
 
-.action-buttons button{
-    margin-right: 24px;
+.action-button, .action-button:hover {
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: transparent;
+    color: black;
+    text-decoration: underline;
+    box-shadow: none;
+    margin:0;
+    padding:0;
+}
+
+.confirm-btn, .confirm-btn:hover, .back-btn, .back-btn:hover{
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: 600;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    padding: 0;
 }
 
 div {
@@ -82,12 +108,10 @@ ul {
 .category-buttons {
     display: flex;
     gap: 12px;
-    background-color: var(--category-bg);
-    padding: 20px;
     border-radius: var(--border-radius);
     width: 100%;
-    flex-wrap: wrap;  /* Allow buttons to wrap */
-    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap:16px;
 }
 
 .category h2 {

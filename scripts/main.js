@@ -159,17 +159,16 @@ function checkAnswer() {
     }
 }
 
-function clearSelections(){
+function clearSelections() {
     document.querySelectorAll(".category button").forEach(button => {
         button.style.opacity = "1";
     });
-
     mySelections.clear();
-    let cupDiv = document.getElementById("cup");
-    showSection(cupDiv);
     selectionDiv.innerText = "";
     resultDiv.innerText = "";
-
+    document.querySelectorAll(".category").forEach(category => {
+        category.style.display = category.id === "cup" ? "block" : "none";
+    });
 }
 
 function toggleRecipeVisibility(){
