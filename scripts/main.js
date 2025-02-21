@@ -148,6 +148,20 @@ function clearSelections(){
 
 }
 
+function showRecipe(){
+    const recipeDiv = document.getElementById("recipe");
+    const button = document.getElementById("show-recipe");
+    if (recipeDiv.style.display === "none") {
+        recipeDiv.style.display = "";
+        button.innerText = "Hide Recipe"
+    } 
+    else {
+        recipeDiv.style.display = "none";
+        button.innerText = "Show Recipe"
+    }
+}
+
 // Event listener for buttons
 document.getElementById("check-answer-btn").addEventListener("click", checkAnswer);
 document.getElementById("clear").addEventListener("click", clearSelections);
+document.getElementById("show-recipe").addEventListener("click", showRecipe);
