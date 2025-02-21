@@ -106,7 +106,12 @@ document.querySelectorAll(".category button").forEach(button => {
     button.addEventListener("click", function () {
         let value = this.textContent.trim(); 
         if(value=="✔"){
-            hideSection(button.closest(".category"));
+            let thisSection = button.closest(".category");
+            let nextSection = thisSection.nextElementSibling;
+            hideSection(thisSection);
+            if(nextSection){
+                showSection(nextSection);
+            }
         }
         else{
             if (mySelections.has(value)) {
@@ -144,9 +149,8 @@ function clearSelections(){
     });
 
     mySelections.clear();
-    document.querySelectorAll(".category").forEach(category => {
-        showSection(category);
-    });
+    let cupDiv = document.getElementById("cup");
+    showSection(cupDiv);
     selectionDiv.innerText = "";
     resultDiv.innerText = "";
 
