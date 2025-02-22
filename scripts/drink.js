@@ -22,7 +22,11 @@ export class Drink {
             this.base = this.topoff;
             this.topoff = "";
         }
-        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.purees, this.fruits, this.extras, this.blended ? "Blender" : ""]
+        else if(this.blended && this.base=="Cocoa"){
+            this.extras = "Hot Cocoa Mix";
+            this.base = "Water";
+        }
+        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.purees.map(puree => `${puree} Puree`), this.fruits, this.extras, this.blended ? "Blender" : ""]
             .flat()
             .filter(item => item); 
     }

@@ -226,6 +226,9 @@ function checkAnswer() {
 function clearSelections() {
     document.querySelectorAll(".category button").forEach(button => {
         button.style.opacity = "1";
+        if (button.className === "quant-btn") {
+            removeQuantity(button);
+        }
     });
     mySelections.clear();
     selectionDiv.innerText = "";
