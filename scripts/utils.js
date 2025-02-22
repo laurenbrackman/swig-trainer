@@ -2,38 +2,23 @@ export function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-export function decimalToFraction(decimal, tolerance = 1.0E-6) {
-    let decimalStr = decimal.toString();
-    if (decimalStr.includes(".3")) {
-        decimalStr = decimalStr.replace(".3", ".3333333333");
-    } else if (decimalStr.includes(".6")) {
-        decimalStr = decimalStr.replace(".6", ".6666666666");
-    }
-    decimal = parseFloat(decimalStr);
+export function decimalToFraction(decimal) {
+    let fraction = decimal % 1;
+    let whole = Math.floor(decimal - fraction);
 
-    if (decimal % 1 === 0) return decimal.toString(); // Return whole numbers as-is
+    const fractions = [
+        { limit: 0.1, value: "" },
+        { limit: 0.2, value: "1/8" },
+        { limit: 0.3, value: "1/4" },
+        { limit: 0.36, value: "1/3" },
+        { limit: 0.4, value: "3/8" },
+        { limit: 0.6, value: "1/2" },
+        { limit: 0.63, value: "5/8" },
+        { limit: 0.7, value: "2/3" },
+        { limit: 0.8, value: "3/4" },
+        { limit: 0.9, value: "7/8" }
+    ];
 
-    let numerator = 1, denominator = 1;
-    let fraction = numerator / denominator;
-
-    while (Math.abs(fraction - decimal) > tolerance) {
-        if (fraction < decimal) {
-            numerator++;
-        } else {
-            denominator++;
-            numerator = Math.round(decimal * denominator);
-        }
-        fraction = numerator / denominator;
-    }
-
-    let wholePart = Math.floor(numerator / denominator);
-    let remainder = numerator % denominator;
-
-    if (wholePart > 0 && remainder > 0) {
-        return `${wholePart} ${remainder}/${denominator}`; // Mixed number
-    } else if (wholePart > 0) {
-        return `${wholePart}`; // Whole number
-    } else {
-        return `${numerator}/${denominator}`; // Simple fraction
-    }
+    let fractionPart = fractions.find(f => fraction < f.limit)?.value || "";
+    return fractionPart ? (whole ? `${whole} ${fractionPart}`.trim() : fractionPart) : whole.toString();
 }
