@@ -105,7 +105,7 @@ function generateDrink() {
     drink.displayRecipe();
 }
 
-function addQuantity(button){
+function addQuantity(button) {
     let pumpsInput = document.createElement('input');
     pumpsInput.className = 'quantity';
     pumpsInput.type = 'number';
@@ -114,6 +114,12 @@ function addQuantity(button){
     pumpsInput.style.marginLeft = '10px';
     pumpsInput.style.padding = '5px';
     button.append(pumpsInput);
+    pumpsInput.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+    pumpsInput.addEventListener('input', function () {
+        updateSelectionDisplay();
+    });
 }
 
 function removeQuantity(button){
@@ -123,51 +129,58 @@ function removeQuantity(button){
     }
 }
 
-// Event listener for ingredient selection
+function handleCategoryNavigation(button, direction) {
+    let thisSection = button.closest(".category");
+    let targetSection = direction === "next" ? thisSection.nextElementSibling : thisSection.previousElementSibling;
+    hideSection(thisSection);
+    if (targetSection) {
+        showSection(targetSection);
+    } else if (direction === "next") {
+        showSection(document.getElementById("check-answer-btn"));
+    }
+}
+
+function toggleSelection(button, value) {
+    if (mySelections.has(value)) {
+        mySelections.delete(value);
+        button.style.opacity = "1";
+        if (button.className === "quant-btn") {
+            removeQuantity(button);
+        }
+    } else {
+        mySelections.add(value);
+        button.style.opacity = "0.5";
+        if (button.className === "quant-btn") {
+            addQuantity(button);
+        }
+    }
+    updateSelectionDisplay();
+}
+
+function updateSelectionDisplay() {
+    selectionDiv.innerText = "Your Answer: " + [...mySelections].map(item => {
+        let pumpsInput = document.querySelector(`button[data-value="${item}"] input`);
+        let pumps = pumpsInput ? pumpsInput.value : null;
+        if (pumps && pumps > 0) {
+            return `${item} (${pumps} pumps)`;
+        }
+        return item;
+    }).join(", ");
+}
+
 document.querySelectorAll(".category button").forEach(button => {
     button.addEventListener("click", function () {
-        let value = this.textContent.trim(); 
-        if(value=="→"){
-            let thisSection = button.closest(".category");
-            let nextSection = thisSection.nextElementSibling;
-            hideSection(thisSection);
-            if(nextSection){
-                showSection(nextSection);
-            }
-            else{
-                showSection(document.getElementById("check-answer-btn"))
-            }
+        const value = this.textContent.trim();
+        if (value === "→") {
+            handleCategoryNavigation(button, "next");
+        } else if (value === "←") {
+            handleCategoryNavigation(button, "prev");
+        } else {
+            toggleSelection(button, value);
         }
-        else if(value=="←"){
-            let thisSection = button.closest(".category");
-            let prevSection = thisSection.previousElementSibling;
-            hideSection(thisSection);
-            if(prevSection){
-                showSection(prevSection);
-            }
-        }
-
-        else{
-            if (mySelections.has(value)) {
-                mySelections.delete(value);
-                this.style.opacity = "1";
-                if(button.className == "quant-btn"){
-                    removeQuantity(button)
-                }
-            } else {
-                mySelections.add(value);
-                this.style.opacity = "0.5";
-                if(button.className == "quant-btn"){
-                    addQuantity(button)
-                }
-            }
-        }
-        
-        selectionDiv.innerText = "Your Answer: " + [...mySelections].join(", ");
     });
 });
 
-// Function to check if selections match recipe
 function checkAnswer() {
     let correct = [...recipeList];
     let selected = [...mySelections];
