@@ -1,6 +1,5 @@
 import { Drink } from "./drink.js";
-import {getRandomInt} from "./utils.js";
-import { decimalToFraction } from "./utils.js";
+import { getRandomInt, decimalToFraction } from "./utils.js";
 
 const drinks = [
 new Drink("Raspberry Dream", "Dr. Pepper", "", [], ['Coconut Cream'], ['Raspberry'], [], [], false),
@@ -9,7 +8,7 @@ new Drink("DDD", "Diet Dr. Pepper", "", ['Coconut'], [], [], [], [], false),
 new Drink("Spring Fling", "Dr. Pepper", "", ['Vanilla'], ['Coconut Cream'], ['Strawberry'], [], [], false),
 new Drink("Dirty Dr. Pepper", "Dr. Pepper", "", ['Coconut'], [], [], [], [], false),
 new Drink("Dirty S.O.P", "Dr. Pepper", "", ['Coconut', 'Peach'], [], [], [], [], false),
-new Drink("Life's a Peach", "Dr. Pepper", "", ['Vanilla', 'Peach'], [, 'Half and Half'], [], [], [], false),
+new Drink("Life's a Peach", "Dr. Pepper", "", ['Vanilla', 'Peach'], ['Half and Half'], [], [], [], false),
 new Drink("Naughty & Nice", "Dr. Pepper", "", ['English Toffee'], ['Half and Half'], [], [], [], false),
 new Drink("Princess Peach", "Dr. Pepper", "", ['Peach'], ['Coconut Cream'], [], [], [], false),
 new Drink("Save Me Jade", "Diet Dr. Pepper", "", ['SF Coconut', 'SF Vanilla'], [], [], [], [], false),
@@ -22,7 +21,7 @@ new Drink("This Bliss", "Diet Coke", "", ['Cranberry'], [], [], ['Fresh Lime'], 
 new Drink("Just Peachy", "Coke Zero", "", ['Pineapple'], ['Coconut Cream'], ['Peach'], ['Fresh Lime'], [], false),
 new Drink("Waikiki", "Coke", "", ['Pineapple'], ['Coconut Cream'], [], [], [], false),
 new Drink("Cherry Bomb", "Pepsi", "", ['Cherry', 'Coconut'], ['Vanilla Cream'], [], [], [], false),
-new Drink("Beach Babe", "Mountain Dew", "", ['Peach.', 'Raspberry'], ['Vanilla Cream'], [], [], [], false),
+new Drink("Beach Babe", "Mountain Dew", "", ['Peach', 'Raspberry'], ['Vanilla Cream'], [], [], [], false),
 new Drink("Bloody Wild", "Mountain Dew", "", [], [], ['Mango', 'Strawberry'], [], [], false),
 new Drink("Busta Limes", "Mountain Dew", "", [], [], ['Mango', 'Strawberry'], ['Fresh Lime'], [], false),
 new Drink("Dew Gooder", "Mountain Dew", "", ['Pineapple'], ['Coconut Cream'], ['Raspberry'], ['Fresh Lime'], [], false),
@@ -78,7 +77,7 @@ new Drink("Buttery Beer", "Root Beer", "", ['Butterscotch'], ['Vanilla Cream'], 
 new Drink("Happy Camper", "Root Beer", "", ['Toasted Marshmallow'], ['Half and Half'], [], [], [], false),
 new Drink("Island Time", "Fresca", "", ['Passion Fruit'], ['Coconut Cream'], ['Mango'], ['Fresh Orange'], [], false),
 new Drink("Pink Bahama", "Fresca", "", ['Peach', 'Strawberry', 'Raspberry'], [], [], ['Fresh Lemon'], [], false),
-new Drink("Sleigh All Day", "Fresca", "Lemonade", ['Pomergranate', 'Peach'], [], ['Strawberry'], ['Fresh Lemon'], [], false),
+new Drink("Sleigh All Day", "Fresca", "Lemonade", ['Pomegranate', 'Peach'], [], ['Strawberry'], ['Fresh Lemon'], [], false),
 new Drink("Daydreamer", "Ginger Ale", "", ['Pomegranate', 'Cranberry'], [], [], ['Fresh Lemon'], [], false),
 new Drink("Orange You Glad", "Orange Soda", "", ['Orange Soda', 'Vanilla'], ['Half and Half'], [], [], [], false),
 new Drink("Dizzle", "Sprite", "", ['Pineapple'], ['Coconut Cream'], ['Peach'], [], [], false),
@@ -88,7 +87,7 @@ new Drink("Missionary", "Sprite", "", ["Tiger's Blood"], ['Coconut Cream'], [], 
 
 const sizes = [12, 16, 24, 32, 44];
 let recipeList = new Set();
-let mySelections = new Set();
+const selectionData = new Map(); // Stores selections with properties
 const selectionDiv = document.getElementById("selections");
 const resultDiv = document.getElementById("result");
 
@@ -96,8 +95,8 @@ const resultDiv = document.getElementById("result");
 function generateDrink() {
     clearSelections();
     showSection(document.getElementById("cup"));
-    if(document.getElementById("recipe").style.display == ""){
-        toggleRecipeVisibility(document.getElementById("recipe"));
+    if (document.getElementById("recipe").style.display === "") {
+        toggleRecipeVisibility();
     }
     let drink = drinks[getRandomInt(drinks.length)];
     let size = sizes[getRandomInt(sizes.length)];
@@ -106,7 +105,8 @@ function generateDrink() {
     drink.displayRecipe();
 }
 
-function addQuantity(button) {
+// Function to add pump quantity input
+function addQuantity(button, item) {
     let pumpsInput = document.createElement('input');
     pumpsInput.className = 'quantity';
     pumpsInput.type = 'number';
@@ -116,22 +116,71 @@ function addQuantity(button) {
     pumpsInput.placeholder = 'Enter pumps';
     pumpsInput.style.marginLeft = '10px';
     pumpsInput.style.padding = '5px';
+
     button.append(pumpsInput);
-    pumpsInput.addEventListener('click', function (event) {
-        event.stopPropagation();
-    });
+
+    pumpsInput.addEventListener('click', event => event.stopPropagation());
+
     pumpsInput.addEventListener('input', function () {
+        let value = parseFloat(this.value) || 0;
+        if (selectionData.has(item)) {
+            selectionData.get(item).pumps = value;
+        }
         updateSelectionDisplay();
     });
 }
 
-function removeQuantity(button){
+// Function to remove quantity input
+function removeQuantity(button) {
     let pumpsInput = button.querySelector('.quantity');
     if (pumpsInput) {
         pumpsInput.remove();
     }
 }
 
+// Function to toggle "Top Off"
+function toggleTopOff(item) {
+    if (selectionData.has(item)) {
+        let data = selectionData.get(item);
+        data.topOff = !data.topOff; // Toggle "Top Off" status
+    } else {
+        selectionData.set(item, { pumps: 0, topOff: true });
+    }
+    updateSelectionDisplay();
+}
+
+// Function to add "Top Off" options
+function addTopOff(button, item) {
+    let optionsDiv = document.createElement('div');
+    optionsDiv.className = "topoff-options";
+    optionsDiv.style.display = "inline-block";
+    optionsDiv.style.marginLeft = "10px";
+
+    let yesButton = document.createElement('button');
+    yesButton.innerText = "Top-Off";
+    yesButton.className = "topoff-yes";
+    yesButton.style.marginRight = "5px";
+
+    let noButton = document.createElement('button');
+    noButton.innerText = "Base";
+    noButton.className = "topoff-no";
+
+    optionsDiv.append(yesButton, noButton);
+    button.append(optionsDiv);
+
+    yesButton.addEventListener('click', event => {
+        event.stopPropagation();
+        toggleTopOff(item);
+        optionsDiv.remove();
+    });
+
+    noButton.addEventListener('click', event => {
+        event.stopPropagation();
+        optionsDiv.remove();
+    });
+}
+
+// Function to handle navigation
 function handleCategoryNavigation(button, direction) {
     let thisSection = button.closest(".category");
     let targetSection = direction === "next" ? thisSection.nextElementSibling : thisSection.previousElementSibling;
@@ -143,94 +192,83 @@ function handleCategoryNavigation(button, direction) {
     }
 }
 
-function toggleSelection(button, value) {
-    if (mySelections.has(value)) {
-        mySelections.delete(value);
+// Function to toggle item selection
+function toggleSelection(button, item) {
+    if (selectionData.has(item)) {
+        selectionData.delete(item);
         button.style.opacity = "1";
-        if (button.className === "quant-btn") {
-            removeQuantity(button);
-        }
+        removeQuantity(button);
     } else {
-        mySelections.add(value);
+        selectionData.set(item, { pumps: 0, topOff: false });
         button.style.opacity = "0.5";
         if (button.className === "quant-btn") {
-            addQuantity(button);
+            addQuantity(button, item);
+        } else if (button.className === "soda-btn") {
+            addTopOff(button, item);
         }
     }
     updateSelectionDisplay();
 }
 
+// Function to update display of selected items
 function updateSelectionDisplay() {
-    selectionDiv.innerText = "Your Answer: " + [...mySelections].map(item => {
-        let pumpsInput = document.querySelector(`button[data-value="${item}"] input`);
-        let pumps = pumpsInput ? pumpsInput.value : null;
-        if (pumps && pumps > 0) {
-            return `${item} (${decimalToFraction(pumps)} pumps)`;
+    selectionDiv.innerText = "Your Answer: " + [...selectionData.entries()].map(([item, data]) => {
+        let text = item;
+        if (data.pumps && data.pumps > 0) {
+            text += ` (${decimalToFraction(data.pumps)} pumps)`;
         }
-        return item;
+        if (data.topOff) {
+            text += " (Top Off)";
+        }
+        return text;
     }).join(", ");
 }
 
+// Event listeners for selection buttons
 document.querySelectorAll(".category button").forEach(button => {
     button.addEventListener("click", function () {
-        const value = this.textContent.trim();
-        if (value === "→") {
+        const item = this.textContent.trim();
+        if (item === "→") {
             handleCategoryNavigation(button, "next");
-        } else if (value === "←") {
+        } else if (item === "←") {
             handleCategoryNavigation(button, "prev");
         } else {
-            toggleSelection(button, value);
+            toggleSelection(button, item);
         }
     });
 });
 
+// Function to check the answer
 function checkAnswer() {
-    let correct = [...recipeList];
-    let selected = document.getElementById('selections').textContent.split(':')[1].split(',').map(item => item.trim());    
-    let allCorrect = selected.length === correct.length && selected.every(item => recipeList.has(item));
-    let incorrectItems = selected.filter(item => !recipeList.has(item));
+    let correct = [...recipeList]; // Correct answers from the recipe
+    let selectedString = document.getElementById('selections').innerText.replace("Your Answer: ", "");
+    let selected = selectedString.split(',').map(item => item.trim());
+    let allCorrect = selected.length === correct.length && selected.every(item => {
+        return correct.includes(item);
+    });
+    let incorrectItems = selected.filter(item => {
+        return !correct.includes(item) || selectionData.get(item)?.topOff !== selectionData.get(item)?.topOff || selectionData.get(item)?.pumps !== selectionData.get(item)?.pumps;
+    });
     let missingItems = correct.filter(item => !selected.includes(item));
+    console.log(selected);
+    console.log(correct);
 
-    console.log("LET'S CHECK");
-    console.log(`Actual: ${correct}`);
-    console.log(`Selected: ${selected}`);
+    resultDiv.innerText = allCorrect && missingItems.length === 0 ? "✅ Correct!" : "❌ Incorrect!";
+    resultDiv.style.color = allCorrect ? "green" : "red";
 
-    if (allCorrect && missingItems.length === 0) {
-        resultDiv.innerText = "✅ Correct!";
-        resultDiv.style.color = "green";
-    } else {
-        resultDiv.innerText = "❌ Incorrect!";
-        resultDiv.style.color = "red";
-        if (incorrectItems.length > 0) {
-            let incorrectList = document.createElement("ul");
-            incorrectItems.forEach(item => {
-                let listItem = document.createElement("li");
-                listItem.innerText = `Incorrect: ${item}`;
-                incorrectList.appendChild(listItem);
-            });
-            resultDiv.appendChild(incorrectList);
-        }
-        if (missingItems.length > 0) {
-            let missingList = document.createElement("ul");
-            missingItems.forEach(item => {
-                let listItem = document.createElement("li");
-                listItem.innerText = `Missing: ${item}`;
-                missingList.appendChild(listItem);
-            });
-            resultDiv.appendChild(missingList);
-        }
+    if (!allCorrect) {
+        resultDiv.innerHTML += incorrectItems.length ? `<ul>${incorrectItems.map(item => `<li>Incorrect: ${item}</li>`).join("")}</ul>` : "";
+        resultDiv.innerHTML += missingItems.length ? `<ul>${missingItems.map(item => `<li>Missing: ${item}</li>`).join("")}</ul>` : "";
     }
 }
 
-
+// Function to clear selections
 function clearSelections() {
     document.querySelectorAll(".category button").forEach(button => {
         button.style.opacity = "1";
-        if (button.className === "quant-btn") {
-            removeQuantity(button);
-        }
+        removeQuantity(button);
     });
-    mySelections.clear();
+    selectionData.clear();
     selectionDiv.innerText = "";
     resultDiv.innerText = "";
     document.querySelectorAll(".category").forEach(category => {
@@ -238,28 +276,29 @@ function clearSelections() {
     });
 }
 
-function toggleRecipeVisibility(){
+// Function to toggle recipe visibility
+function toggleRecipeVisibility() {
     const recipeDiv = document.getElementById("recipe");
     const button = document.getElementById("show-recipe");
     if (recipeDiv.style.display === "none") {
-        showSection(recipeDiv)
-        button.innerText = "Hide Recipe"
-    } 
-    else {
-        hideSection(recipeDiv)
-        button.innerText = "Show Recipe"
+        showSection(recipeDiv);
+        button.innerText = "Hide Recipe";
+    } else {
+        hideSection(recipeDiv);
+        button.innerText = "Show Recipe";
     }
 }
 
-function hideSection(section){
+// Utility functions to show/hide sections
+function hideSection(section) {
     section.style.display = "none";
 }
 
-function showSection(section){
+function showSection(section) {
     section.style.display = "";
 }
 
-// Event listener for buttons
+// Event listeners for buttons
 document.getElementById("generate-btn").addEventListener("click", generateDrink);
 document.getElementById("check-answer-btn").addEventListener("click", checkAnswer);
 document.getElementById("clear").addEventListener("click", clearSelections);

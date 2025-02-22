@@ -7,7 +7,7 @@ export function calculateRatios(category, size) {
     let baseTopoff = 0;
 
     switch (category) {
-        case "Frozen Cocoa":
+        case "Frozen Hot Cocoa":
             return [3, 5, 0.75, 8];
         case "Hot Cocoa":
             return [1.5, 2, 0.25, baseTopoff];

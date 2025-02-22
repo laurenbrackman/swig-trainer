@@ -22,9 +22,8 @@ export class Drink {
         let creamList = [];
         let pureeList = [];
         if(this.blended && (this.base=="Reviver" || this.base=="SF Reviver")){
-            this.extras = this.base + " Concentrate";
-            this.base = this.topoff;
-            this.topoff = "";
+            this.extras = this.base + " Concentrate (" + pureeTotal.toString() + " pumps)";
+            this.base = "";
         }
         else if(this.blended && this.base=="Cocoa"){
             this.extras = "Hot Cocoa Mix";
@@ -42,7 +41,7 @@ export class Drink {
             let pureeRatio = decimalToFraction(pureeTotal / this.purees.length);
             pureeList = this.purees.map(puree => `${puree} Puree (${pureeRatio} pumps)`);
         }
-        return [this.getCupType(this.size),this.base, this.topoff, flavorList, creamList, pureeList, this.fruits, this.extras, this.blended ? "Blender" : ""]
+        return [this.getCupType(this.size),this.base, this.topoff ? this.topoff + " (Top Off)" : "", flavorList, creamList, pureeList, this.fruits, this.extras, this.blended ? "Blender" : ""]
             .flat()
             .filter(item => item); 
     }
