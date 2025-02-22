@@ -108,12 +108,16 @@ function generateDrink() {
 function addQuantity(button) {
     let pumpsInput = document.createElement('input');
     pumpsInput.className = 'quantity';
-    pumpsInput.type = 'number';
-    pumpsInput.min = 1;
+    pumpsInput.type = 'text';
     pumpsInput.placeholder = 'Enter pumps';
     pumpsInput.style.marginLeft = '10px';
     pumpsInput.style.padding = '5px';
     button.append(pumpsInput);
+    pumpsInput.addEventListener('keydown', function (event) {
+        if (event.key === ' ') {
+            event.preventDefault(); // Prevent space bar default action
+        }
+    });
     pumpsInput.addEventListener('click', function (event) {
         event.stopPropagation();
     });
