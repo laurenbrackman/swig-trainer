@@ -186,7 +186,7 @@ document.querySelectorAll(".category button").forEach(button => {
 
 function checkAnswer() {
     let correct = [...recipeList];
-    let selected = [...mySelections];
+    let selected = document.getElementById('selections').textContent.split(':')[1].split(',').map(item => item.trim());    
     let allCorrect = selected.length === correct.length && selected.every(item => recipeList.has(item));
     let incorrectItems = selected.filter(item => !recipeList.has(item));
     let missingItems = correct.filter(item => !selected.includes(item));

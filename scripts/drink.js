@@ -17,6 +17,8 @@ export class Drink {
     }
 
     getRecipe() {
+        const [flavorTotal, , , ] = calculateRatios(this.category, this.size);
+        let flavorRatio = decimalToFraction(flavorTotal / this.flavors.length);
         if(this.blended && (this.base=="Reviver" || this.base=="SF Reviver")){
             this.extras = this.base + " Concentrate";
             this.base = this.topoff;
@@ -26,7 +28,7 @@ export class Drink {
             this.extras = "Hot Cocoa Mix";
             this.base = "Water";
         }
-        return [this.getCupType(this.size),this.base, this.topoff, this.flavors, this.creams, this.purees.map(puree => `${puree} Puree`), this.fruits, this.extras, this.blended ? "Blender" : ""]
+        return [this.getCupType(this.size),this.base, this.topoff, this.flavors.map(flavor => `${flavor} (${flavorRatio} pumps)`), this.creams, this.purees.map(puree => `${puree} Puree`), this.fruits, this.extras, this.blended ? "Blender" : ""]
             .flat()
             .filter(item => item); 
     }
