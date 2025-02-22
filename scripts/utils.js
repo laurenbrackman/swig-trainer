@@ -3,6 +3,14 @@ export function getRandomInt(max) {
 }
 
 export function decimalToFraction(decimal, tolerance = 1.0E-6) {
+    let decimalStr = decimal.toString();
+    if (decimalStr.includes(".3")) {
+        decimalStr = decimalStr.replace(".3", ".3333333333");
+    } else if (decimalStr.includes(".6")) {
+        decimalStr = decimalStr.replace(".6", ".6666666666");
+    }
+    decimal = parseFloat(decimalStr);
+
     if (decimal % 1 === 0) return decimal.toString(); // Return whole numbers as-is
 
     let numerator = 1, denominator = 1;

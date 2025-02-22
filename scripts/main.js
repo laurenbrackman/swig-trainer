@@ -1,5 +1,6 @@
 import { Drink } from "./drink.js";
 import {getRandomInt} from "./utils.js";
+import { decimalToFraction } from "./utils.js";
 
 const drinks = [
 new Drink("Raspberry Dream", "Dr. Pepper", "", [], ['Coconut Cream'], ['Raspberry'], [], [], false),
@@ -108,16 +109,14 @@ function generateDrink() {
 function addQuantity(button) {
     let pumpsInput = document.createElement('input');
     pumpsInput.className = 'quantity';
-    pumpsInput.type = 'text';
+    pumpsInput.type = 'number';
+    pumpsInput.min = 0;
+    pumpsInput.max = 15;
+    pumpsInput.step = 0.1;
     pumpsInput.placeholder = 'Enter pumps';
     pumpsInput.style.marginLeft = '10px';
     pumpsInput.style.padding = '5px';
     button.append(pumpsInput);
-    pumpsInput.addEventListener('keydown', function (event) {
-        if (event.key === ' ') {
-            event.preventDefault(); // Prevent space bar default action
-        }
-    });
     pumpsInput.addEventListener('click', function (event) {
         event.stopPropagation();
     });
@@ -166,7 +165,7 @@ function updateSelectionDisplay() {
         let pumpsInput = document.querySelector(`button[data-value="${item}"] input`);
         let pumps = pumpsInput ? pumpsInput.value : null;
         if (pumps && pumps > 0) {
-            return `${item} (${pumps} pumps)`;
+            return `${item} (${decimalToFraction(pumps)} pumps)`;
         }
         return item;
     }).join(", ");
