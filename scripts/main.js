@@ -113,7 +113,6 @@ function addQuantity(button, item) {
     pumpsInput.min = 0;
     pumpsInput.max = 15;
     pumpsInput.step = 0.1;
-    pumpsInput.placeholder = 'Enter pumps';
     pumpsInput.style.marginLeft = '10px';
     pumpsInput.style.padding = '5px';
 
@@ -156,16 +155,16 @@ function addTopOff(button, item) {
     optionsDiv.style.display = "inline-block";
     optionsDiv.style.marginLeft = "10px";
 
+    let noButton = document.createElement('button');
+    noButton.innerText = "Base";
+    noButton.className = "topoff-no";
+
     let yesButton = document.createElement('button');
     yesButton.innerText = "Top-Off";
     yesButton.className = "topoff-yes";
     yesButton.style.marginRight = "5px";
 
-    let noButton = document.createElement('button');
-    noButton.innerText = "Base";
-    noButton.className = "topoff-no";
-
-    optionsDiv.append(yesButton, noButton);
+    optionsDiv.append(noButton, yesButton);
     button.append(optionsDiv);
 
     yesButton.addEventListener('click', event => {
@@ -192,8 +191,8 @@ function handleCategoryNavigation(button, direction) {
     }
 }
 
-// Function to toggle item selection
 function toggleSelection(button, item) {
+    let parentCategory = button.closest(".category")?.id;
     if (selectionData.has(item)) {
         selectionData.delete(item);
         button.style.opacity = "1";
@@ -201,21 +200,29 @@ function toggleSelection(button, item) {
     } else {
         selectionData.set(item, { pumps: 0, topOff: false });
         button.style.opacity = "0.5";
-        if (button.className === "quant-btn") {
-            addQuantity(button, item);
-        } else if (button.className === "soda-btn") {
+        if (button.classList.contains("quant-btn")) {
+            addQuantity(button, item, parentCategory);
+        } else if (button.classList.contains("soda-btn")) {
             addTopOff(button, item);
         }
     }
     updateSelectionDisplay();
 }
 
-// Function to update display of selected items
 function updateSelectionDisplay() {
     selectionDiv.innerText = "Your Answer: " + [...selectionData.entries()].map(([item, data]) => {
         let text = item;
+        let button = document.querySelector(`button[data-value="${item}"]`);
+        if (!button) {
+            console.warn(`Button with data-value="${item}" not found.`);
+            return text; // Skip processing for this item
+        }
+        let parentCategory = button.closest('.category');  
+        let categoryId = parentCategory ? parentCategory.id : '';  
+        let unit = (categoryId === "fruit") ? "wedges" : "pumps";
+
         if (data.pumps && data.pumps > 0) {
-            text += ` (${decimalToFraction(data.pumps)} pumps)`;
+            text += ` (${decimalToFraction(data.pumps)} ${unit})`;
         }
         if (data.topOff) {
             text += " (Top Off)";

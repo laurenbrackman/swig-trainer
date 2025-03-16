@@ -41,7 +41,7 @@ export class Drink {
             let pureeRatio = decimalToFraction(pureeTotal / this.purees.length);
             pureeList = this.purees.map(puree => `${puree} Puree (${pureeRatio} pumps)`);
         }
-        return [this.getCupType(this.size),this.base, this.topoff ? this.topoff + " (Top Off)" : "", flavorList, creamList, pureeList, this.fruits, this.extras, this.blended ? "Blender" : ""]
+        return [this.getCupType(this.size),this.base, this.topoff ? this.topoff + " (Top Off)" : "", flavorList, creamList, pureeList, this.fruits, this.extras, this.blended ? "Blender & Ice" : ""]
             .flat()
             .filter(item => item); 
     }
@@ -107,7 +107,7 @@ export class Drink {
         const recipeDiv = document.getElementById("recipe");
     
         drinkDiv.textContent = `${this.size}oz ${this.name}`;
-        const [flavors, creams, purees, topoff] = calculateRatios(this.category, this.size);
+        const [flavors, creams, purees, topoff, fruits] = calculateRatios(this.category, this.size);
     
         let recipeHTML = "<ul>";
         recipeHTML += `<li><strong>Cup:</strong> ${this.getCupType(this.size)}</li>`;
@@ -142,7 +142,7 @@ export class Drink {
         }
 
         if(this.fruits.length > 0) {
-            recipeHTML += `<li><strong>Fruits:</strong> ${this.fruits}</li>`;
+            recipeHTML += `<li><strong>Fruits:</strong> ${this.fruits} (${decimalToFraction(fruits)} wedges)</li>`;
         }
 
         if(this.extras.length > 0) {
