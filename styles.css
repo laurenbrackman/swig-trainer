@@ -38,6 +38,16 @@ body {
     margin: 20px;
 }
 
+@media (max-width: 756px){
+    body{
+        display: block;
+    }
+    .header-card, .card {
+        width: 80%;
+        margin: 20px auto;
+    }
+}
+
 .action-buttons{
     display:flex;
     gap: 24px;
